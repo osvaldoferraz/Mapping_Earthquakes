@@ -36,16 +36,25 @@ let sanFranAirport =
 // }).addTo(map)
 
 // SKILL DRILL
+// L.geoJSON(sanFranAirport, {
+//     // We turn each feature into a marker on the map
+//     pointToLayer: function(feature, latlng) {
+//         console.log(feature);
+//         return L.marker(latlng)
+//         .bindPopup(`<h3>${feature.properties.name}</h3><hr>
+//         <h4>${feature.properties.city}, ${feature.properties.country}</h4>`)
+//     }
+// }).addTo(map)
+
+// Grabbin our GoeJSON Data
 L.geoJSON(sanFranAirport, {
     // We turn each feature into a marker on the map
-    pointToLayer: function(feature, latlng) {
-        console.log(feature);
-        return L.marker(latlng)
-        .bindPopup(`<h3>${feature.properties.name}</h3><hr>
-        <h4>${feature.properties.city}, ${feature.properties.country}</h4>`)
+    onEachFeature: function(feature, layer) {
+        console.log(layer);
+        layer.bindPopup(`<h3>Airport code: ${feature.properties.faa}</h3><hr>
+                        <h4>Airport name: ${feature.properties.name}</h4>`)
     }
 }).addTo(map)
-
 
 
 
