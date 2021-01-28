@@ -3,7 +3,7 @@ console.log('working');
 
 // Create the map object with a center and zoom lelvel
 // let map = L.map('mapid').setView([40.7, -94.5], 4);
-let map = L.map('mapid').setView([37.5, -122.5],10);
+let map = L.map('mapid').setView([40, -100],3);
 
 // We create a tile layer that will be the background of our map.
 // let streets = L.tileLayer('https://api.mapbox.com/styles/v1/mapbox/streets-v11/tiles/{z}/{x}/{y}?access_token={accessToken}', {
@@ -16,10 +16,18 @@ let streets = L.tileLayer('https://api.mapbox.com/styles/v1/mapbox/streets-v11/t
 
 streets.addTo(map);
 
+let airportData = 'https://raw.githubusercontent.com/osvaldoferraz/Mapping_Earthquakes/main/majorAirports.json'
+
 // Grabbin our GeoJSON Data
 d3.json(airportData).then(function(data){
     console.log(data);
     //Creating a GeoJSON layer with the retrieved data
-    L.geoJason(data).addTo(map);
+    L.geoJson(data, {
+        onEachFeature: function(features, details) {
+        details.bindPopup(`<h2>Airpot code: ${features.properties.faa}</h2><hr><h3>Airport Name: ${features.properties.name}`)}
+    }).addTo(map);
 })
 
+// let popUp = airportData.forEach(data => data.bindPopup(`<h2>Airpot code: ${features.properties.faa}</h2>`))
+// popUp.addTo(map)
+// bindPopup(`<h2>Airpot code: ${features.properties.faa}</h2>`)
