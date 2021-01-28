@@ -1,9 +1,9 @@
 //Add an array containing each city's location, state, and population
-let cities =[{
-    location: [40.7128, -74.0059],
-    city: 'New York City',
-    state: 'NY',
-    population: 8398748
+var cities =[{
+location: [40.7128, -74.0059],
+city: 'New York City',
+state: 'NY',
+population: 8398748
 },
 {
 location: [41.8781, -87.6298],
@@ -29,4 +29,4 @@ location: [41.8781, -87.6298],
   state: "AZ",
   population: 1660272
 }
-];
+]
