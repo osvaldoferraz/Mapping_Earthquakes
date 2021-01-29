@@ -4,7 +4,7 @@ console.log('working');
 // We create a tile layer that will be the background of our map.
 // let streets = L.tileLayer('https://api.mapbox.com/styles/v1/mapbox/streets-v11/tiles/{z}/{x}/{y}?access_token={accessToken}', {
 //Sill Drill
-let streets = L.tileLayer('https://api.mapbox.com/styles/v1/mapbox/streets-v11/tiles/{z}/{x}/{y}?access_token={accessToken}', {
+let light = L.tileLayer('https://api.mapbox.com/styles/v1/mapbox/light-v10/tiles/{z}/{x}/{y}?access_token={accessToken}', {
     attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors, Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
     maxZoom: 18,
     accessToken: API_KEY
@@ -19,28 +19,28 @@ attribution: 'Map data © <a href="https://www.openstreetmap.org/">OpenStreetMap
 
 //Create a base layer taht holds both maps
 let baseMaps = {
-    Street: streets,
+    Light: light,
     Dark: dark
 };
 
 // Create the map object with a center and zoom lelvel
 // let map = L.map('mapid').setView([40.7, -94.5], 4);
 let map = L.map('mapid', {
-    center: [40.7, -94.5],
-    zoom: 4,
-    layers: [streets]
+    center: [44, -80],
+    zoom: 2,
+    layers: [light]
 });
 
 L.control.layers(baseMaps).addTo(map);
 
-let airportData = 'https://raw.githubusercontent.com/osvaldoferraz/Mapping_Earthquakes/main/majorAirports.json'
+let torontoData = 'https://raw.githubusercontent.com/osvaldoferraz/Mapping_Earthquakes/Mapping_GeoJSON_Linestrings/torontoRoutes.json'
 
 // Grabbin our GeoJSON Data
-d3.json(airportData).then(function(data) {
+d3.json(torontoData).then(function(data) {
     console.log(data);
     //Creating a GeoJSON layer with the retrieved data
-    L.geoJson(data, {
-        onEachFeature: function(features, details) {
-        details.bindPopup(`<h2>Airpot code: ${features.properties.faa}</h2><hr><h3>Airport Name: ${features.properties.name}`)}
-    }).addTo(map);
+    L.geoJson(data).addTo(map);
 })
+
+// onEachFeature: function(features, details) {
+//     details.bindPopup(`<h2>Airpot code: ${features.properties.faa}</h2><hr><h3>Airport Name: ${features.properties.name}`)}
