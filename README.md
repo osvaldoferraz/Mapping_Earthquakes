@@ -5,5 +5,5 @@ This project aim to display in a webpage a world map with data of earthquakes fr
 In order to produce the map were used:
 - JS as main coding language
 - D3 to retrieve JSON data from the web
-- MapBox to draw thee maps
+- MapBox to draw the maps
 - Leaflet to plot data on the maps
