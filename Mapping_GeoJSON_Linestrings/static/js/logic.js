@@ -28,7 +28,7 @@ let baseMaps = {
 let map = L.map('mapid', {
     center: [44, -80],
     zoom: 2,
-    layers: [light]
+    layers: [dark]
 });
 
 L.control.layers(baseMaps).addTo(map);
@@ -39,8 +39,11 @@ let torontoData = 'https://raw.githubusercontent.com/osvaldoferraz/Mapping_Earth
 d3.json(torontoData).then(function(data) {
     console.log(data);
     //Creating a GeoJSON layer with the retrieved data
-    L.geoJson(data).addTo(map);
+    L.geoJson(data, {
+        color: 'yellow',
+        weight: 1,
+        onEachFeature: function(features, details) {
+        details.bindPopup(`<h2>Airline code: ${features.properties.airline}</h2><hr><h3>Destination: ${features.properties.dst}`)}
+    }).addTo(map);
 })
 
-// onEachFeature: function(features, details) {
-//     details.bindPopup(`<h2>Airpot code: ${features.properties.faa}</h2><hr><h3>Airport Name: ${features.properties.name}`)}
