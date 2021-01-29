@@ -26,31 +26,31 @@ let baseMaps = {
 // Create the map object with a center and zoom lelvel
 // let map = L.map('mapid').setView([40.7, -94.5], 4);
 let map = L.map('mapid', {
-    center: [43.7, -79.3],
-    zoom: 11,
-    layers: [satelliteStreets]
+    center: [39.5, -98.5],
+    zoom: 3,
+    layers: [streets]
 });
 
 L.control.layers(baseMaps).addTo(map);
 
-let torontoHoods = 'https://raw.githubusercontent.com/osvaldoferraz/Mapping_Earthquakes/Mapping_GeoJSON_Polygons/torontoNeighborhoods.json'
+// let torontoHoods = 'https://raw.githubusercontent.com/osvaldoferraz/Mapping_Earthquakes/Mapping_GeoJSON_Polygons/torontoNeighborhoods.json'
 
-//SKILL DRILL
-// Create a style for the polygons
-let myStyle = {
-    color: "blue",
-    fillColor: 'yellow',
-    weight: 1
-}
+// //SKILL DRILL
+// // Create a style for the polygons
+// let myStyle = {
+//     color: "blue",
+//     fillColor: 'yellow',
+//     weight: 1
+// }
 
 // Grabbin our GeoJSON Data
-d3.json(torontoHoods).then(function(data) {
+d3.json('https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/all_week.geojson').then(function(data) {
     console.log(data);
     //Creating a GeoJSON layer with the retrieved data
     L.geoJson(data, {
-        style: myStyle,
-        onEachFeature: function(features, details) {
-        details.bindPopup(`<h2>Neighborhood: ${features.properties.AREA_NAME}</h2>`)}
+        // style: myStyle,
+        // onEachFeature: function(features, details) {
+        // details.bindPopup(`<h2>Neighborhood: ${features.properties.AREA_NAME}</h2>`)}
     }).addTo(map);
 })
 
