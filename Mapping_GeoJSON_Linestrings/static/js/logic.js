@@ -1,16 +1,14 @@
 // Add console.log to check to see if our code is working
 console.log('working');
 
-
 // We create a tile layer that will be the background of our map.
 // let streets = L.tileLayer('https://api.mapbox.com/styles/v1/mapbox/streets-v11/tiles/{z}/{x}/{y}?access_token={accessToken}', {
 //Sill Drill
-let streets = L.tileLayer('https://api.mapbox.com/styles/v1/mapbox/streets-v11/tiles/{z}/{x}/{y}?access_token={accessToken}', {
+let light = L.tileLayer('https://api.mapbox.com/styles/v1/mapbox/light-v10/tiles/{z}/{x}/{y}?access_token={accessToken}', {
     attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors, Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
     maxZoom: 18,
     accessToken: API_KEY
 });
-
 
 // We create the dark view tile layer that will be an option for our map.
 let dark = L.tileLayer('https://api.mapbox.com/styles/v1/mapbox/dark-v10/tiles/{z}/{x}/{y}?access_token={accessToken}', {
@@ -21,24 +19,36 @@ attribution: 'Map data © <a href="https://www.openstreetmap.org/">OpenStreetMap
 
 //Create a base layer taht holds both maps
 let baseMaps = {
-    Street: streets,
+    Light: light,
     Dark: dark
 };
 
+// Create the map object with a center and zoom lelvel
+// let map = L.map('mapid').setView([40.7, -94.5], 4);
+let map = L.map('mapid', {
+    center: [44, -80],
+    zoom: 2,
+    layers: [dark]
+});
 
-let airportData = 'https://raw.githubusercontent.com/osvaldoferraz/Mapping_Earthquakes/main/majorAirports.json'
+L.control.layers(baseMaps).addTo(map);
+
+let torontoData = 'https://raw.githubusercontent.com/osvaldoferraz/Mapping_Earthquakes/Mapping_GeoJSON_Linestrings/torontoRoutes.json'
+
+//Create a mystyle for the lines
+let myStyle = {
+    color: "#ffffa1",
+    weight: 2
+}
 
 // Grabbin our GeoJSON Data
-d3.json(airportData).then(function(data){
+d3.json(torontoData).then(function(data) {
     console.log(data);
     //Creating a GeoJSON layer with the retrieved data
     L.geoJson(data, {
+        style: myStyle,
         onEachFeature: function(features, details) {
-        details.bindPopup(`<h2>Airpot code: ${features.properties.faa}</h2><hr><h3>Airport Name: ${features.properties.name}`)}
+        details.bindPopup(`<h2>Airline code: ${features.properties.airline}</h2><hr><h3>Destination: ${features.properties.dst}`)}
     }).addTo(map);
 })
 
-//Skill Drill
-// let popUp = airportData.forEach(data => data.bindPopup(`<h2>Airpot code: ${features.properties.faa}</h2>`))
-// popUp.addTo(map)
-// bindPopup(`<h2>Airpot code: ${features.properties.faa}</h2>`)
